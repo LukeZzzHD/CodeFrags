@@ -1,31 +1,21 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">
+<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom mb-3">
+    <a class="navbar-brand ml-4" href="#">
       <img src="{{ url_for('static', filename='Logo.png') }}" alt="logo" style="height:40px;">
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div id="navbarNavDropdown" class="navbar-collapse collapse">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">New Posts</a>
-            </li>
-
-        </ul>
-        <ul class="navbar-nav">
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  History
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="#">Your Posts</a>
-                    <a class="dropdown-item" href="#">Your Comments</a>
+        <ul class="navbar-nav w-100">
+            <li class="text-truncate ml-5 mr-5 w-75 d-none d-lg-block">
+              <form class="input-group">
+                <input class="form-control" name="search" placeholder="Search Here" autocomplete="off" autofocus="autofocus" type="text">
+                <div class="input-group-btn">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
                 </div>
+              </form>
             </li>
-            <li class="nav-item">
+            <li class="nav-item ml-lg-auto">
                 <a class="nav-link" href="#">Login</a>
             </li>
             <li class="nav-item">

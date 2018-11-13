@@ -1,0 +1,1 @@
+pip install flask flask_sqlalchemy flask_bcrypt flask_login flask_mail flask_wtf Pillow
