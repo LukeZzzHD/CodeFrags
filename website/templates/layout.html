@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='master.css') }}">
     {% if title %}
       <title>{{ title }} - CFrags</title>
     {% else %}
@@ -11,10 +14,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
   <body>
+    {% include "navbar.html" %}
     <div class="container">
       <div class="row">
-        <div class="col-lg-">
-          {% include "navbar.html" %}
+        <div class="col-lg-8 col-md-12">
+          <h1 class="mb-3">Posts by Username</h1>
+        <article class="media content-section">
+          <img class="rounded-circle article-img" src="#">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">Username</a>
+              <small class="text-muted">3.11.2000</small>
+            </div>
+            <h2><a class="article-title" href="#">Title</a></h2>
+            <code class="article-content">Code</code>
+          </div>
+        </article>
+        </div>
+        <div class="col-lg-4 d-none d-lg-block hidden-md">
+          <div class="jumbotron bg-dark">
+            <div class="form-group">
+              <form action="" method="POST">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search all posts!"/>
+                    <input id="searchPosts" type="submit" value="Search" class="btn btn-primary" />
+                </div>
+              </form>
+            </div>
+          </div>
         </div>
       </div>
     </div>
