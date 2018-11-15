@@ -11,4 +11,5 @@ posts = [
 @main.route("/")
 @main.route("/home")
 def home():
+    flash("You have reached our Home Page!", "success")
     return render_template('home.html', title="Home")

@@ -1,13 +1,21 @@
 {% extends "layout.html" %}
 {% block content %}
-<div class="col-xl-8 col-lg-8 col-md-12 col-xs-12 float-left">
+<div class="col-xl-8 col-lg-8 col-md-8 col-xs-12 float-left">
+  <div class="form-inline w-100 justify-content-center mb-3">
+    <form class="input-group w-100">
+      <input class="form-control" name="search" placeholder="Search Here" autocomplete="off" autofocus="autofocus" type="text">
+      <div class="input-group-btn">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+      </div>
+    </form>
+  </div>
   <div class="jumbotron bg-dark">
 
   </div>
 </div>
-<div class="col-xl-4 col-lg-4 col-md-12 col-xs-12 float-right">
+<div class="col-xl-4 col-lg-4 col-md-4 col-xs-12 float-right">
   <div class="jumbotron bg-light">
-    
+
   </div>
 </div>
 {% endblock content %}

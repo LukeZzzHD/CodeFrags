@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom mb-3">
+<nav class="navbar navbar-expand-md navbar-light bg-light border-bottom mb-3">
     <a class="navbar-brand ml-4" href="#">
       <img src="{{ url_for('static', filename='Logo.png') }}" alt="logo" style="height:40px;">
     </a>
@@ -7,15 +7,13 @@
     </button>
     <div id="navbarNavDropdown" class="navbar-collapse collapse">
         <ul class="navbar-nav w-100">
-            <li class="text-truncate ml-5 mr-5 w-75 d-none d-lg-block">
-              <form class="input-group">
-                <input class="form-control" name="search" placeholder="Search Here" autocomplete="off" autofocus="autofocus" type="text">
-                <div class="input-group-btn">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </div>
-              </form>
-            </li>
             <li class="nav-item ml-lg-auto">
+                <a class="nav-link" href="#">About</a>
+            </li>
+            <li class="nav-item mr-md-auto">
+                <a class="nav-link" href="#">Contact</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="#">Login</a>
             </li>
             <li class="nav-item">
