@@ -44,3 +44,34 @@ class Post(db.Model):
 
     def __repr__(self):
         return f"Post('{self.title}', '{self.date_posted}')"
+
+class Language(db.Model):
+    languageID = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable=False)
+
+class CommentLike(db.Model):
+    FK_Comment = db.Column(db.Integer)
+    FK_User = db.Column(db.Integer)
+
+class PostLanguage(db.Model):
+    FK_Post = db.Column(db.Integer)
+    FK_Language = db.Column(db.Integer)
+
+class PostLike(db.Model):
+    FK_Post = db.Column(db.Integer)
+    FK_User = db.Column(db.Integer)
+
+class Comment(db.Model):
+    commentID = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.String)
+    date_commented = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    FK_Post = db.Column(db.Integer)
+    FK_User = db.Column(db.Integer)
+
+class PostTag(db.Model):
+    FK_Post = db.Column(db.Integer)
+    FK_Tag = db.Column(db.Integer)
+
+class Tag(db.Model):
+    tagID = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable=False)
