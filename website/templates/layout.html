@@ -23,6 +23,7 @@
               {% for category, message in messages %}
                 <div class="flash-message alert alert-{{ category }}">
                   {{ message }}
+                  <span onclick="$(this).parent().remove()" class="remove-icon">✕</span>
                 </div>
               {% endfor %}
             {% endif %}

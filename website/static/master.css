@@ -10,3 +10,9 @@
         clear:both;
     }
 }
+
+.remove-icon {
+  float: right;
+  cursor: pointer;
+  user-select: none;
+}
