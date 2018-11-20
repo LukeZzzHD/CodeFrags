@@ -13,12 +13,18 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('main.contact') }}">Contact</a>
             </li>
-            <li class="nav-item  ml-md-auto ml-lg-auto">
-                <a class="nav-link" href="{{ url_for('users.login') }}">Login</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('users.register') }}">Register</a>
-            </li>
+            {% if not current_user.is_authenticated %}
+              <li class="nav-item  ml-md-auto ml-lg-auto">
+                  <a class="nav-link" href="{{ url_for('users.login') }}">Log In</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{{ url_for('users.register') }}">Register</a>
+              </li>
+            {% else %}
+              <li class="nav-item  ml-md-auto ml-lg-auto">
+                  <a class="nav-link" href="{{ url_for('users.logout') }}">Log out</a>
+              </li>
+            {% endif %}
         </ul>
     </div>
 </nav>
