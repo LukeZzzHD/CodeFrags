@@ -3,7 +3,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 from website import db, bcrypt
 from website.models import User, Post
 from website.users.forms import (RegistrationForm, LoginForm, UpdateAccountForm,
-                                   RequestResetForm, ResetPasswordForm)
+                                   RequestResetForm, ResetPasswordForm, NewPostForm)
 from website.users.utils import save_picture, send_reset_email
 
 users = Blueprint('users', __name__)
@@ -107,14 +107,6 @@ def reset_token(token):
         return redirect(url_for('users.login'))
     return render_template('reset_token.html', title='Reset Password', form=form)
 
-@users.route('/new')
+@users.route('/new', methods=['GET', 'POST'])
 @login_required
 def new():
-    form = NewPostForm()
-    if form.validate_on_submit():
-        post = Post(title=form.title.data, content=form.content.data)
-        db.session.add(post)
-        db.session.commit()
-
-    flash('Your post has been created', 'success')
-    return render_template('home.html', title='Home', form=form)
