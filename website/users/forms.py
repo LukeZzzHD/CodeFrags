@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from flask_login import current_user
 from website.models import User
@@ -72,3 +72,15 @@ class ResetPasswordForm(FlaskForm):
     confirm_password = PasswordField('Confirm Password',
                                      validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Reset Password')
+
+class NewPostForm(FlaskForm):
+    title = StringField('Title', validators=[DataRequired(), Length(min=3, max=30)])
+    language = SelectField('- Programming language -')
+    content = StringField('Your Code', validators=[DataRequired(), Length(min=10, max=1000)])
+    tags = StringField('Tags')
+    submit = SubmitField('Create')
+
+    def validate_post(self, title):
+        post_exists = Post.query.filter_by(title=title.data).first()
+        if post_exists:
+            raise ValidationError('A post with the title ' + title.data + ' allready exists!')

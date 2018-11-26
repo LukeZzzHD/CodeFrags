@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+
   <head>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -7,12 +8,13 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ url_for('static', filename='master.css') }}">
     {% if title %}
-      <title>{{ title }} - CFrags</title>
+    <title>{{ title }} - CFrags</title>
     {% else %}
-      <title>CFrags</title>
+    <title>CFrags</title>
     {% endif %}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
+
   <body>
     {% include "navbar.html" %}
     <div class="container-fluid">
@@ -21,15 +23,17 @@
           {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
               {% for category, message in messages %}
-                <div class="flash-message card alert alert-{{ category }}">
-                  {{ message }}
-                  <span onclick="$(this).parent().remove()" class="remove-icon">✕</span>
-                </div>
+              <div class="flash-message card alert alert-{{ category }}">
+                {{ message }}
+                <span onclick="$(this).parent().remove()" class="remove-icon">✕</span>
+              </div>
               {% endfor %}
             {% endif %}
           {% endwith %}
         </div>
-        {% block content %}{% endblock %}
+        {% block content %}
+        <!--Extended file gets inserted here-->
+        {% endblock %}
       </div>
     </div>
   </body>

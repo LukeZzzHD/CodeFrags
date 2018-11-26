@@ -106,3 +106,15 @@ def reset_token(token):
         flash('Your password has been updated! You are now able to log in', 'success')
         return redirect(url_for('users.login'))
     return render_template('reset_token.html', title='Reset Password', form=form)
+
+@users.route('/new')
+@login_required
+def new():
+    form = NewPostForm()
+    if form.validate_on_submit():
+        post = Post(title=form.title.data, content=form.content.data)
+        db.session.add(post)
+        db.session.commit()
+
+    flash('Your post has been created', 'success')
+    return render_template('home.html', title='Home', form=form)

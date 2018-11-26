@@ -45,6 +45,7 @@ class Post(db.Model):
     def __repr__(self):
         return f"Post('{self.title}', '{self.date_posted}')"
 
+'''
 class Language(db.Model):
     languageID = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
@@ -75,3 +76,5 @@ class PostTag(db.Model):
 class Tag(db.Model):
     tagID = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
+	
+'''
