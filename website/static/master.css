@@ -12,7 +12,13 @@
 }
 
 .remove-icon {
+  position: absolute;
+  right: 15px;
   float: right;
   cursor: pointer;
   user-select: none;
+}
+
+.code-textarea {
+  height: 300px;
 }

@@ -7,10 +7,9 @@ main = Blueprint('main', __name__)
 @main.route("/")
 @main.route("/home")
 def home():
-    #flash("You have reached our Home Page!", "success")
-    #flash("Watch out!", "warning")
-    #flash("That's fatal", "danger")
-    return render_template('home.html', title="Home")
+    posts = Post.query.filter_by()\
+        .order_by(Post.date_posted.desc())
+    return render_template('home.html', title="Home", posts=posts)
 
 @main.route("/about")
 def about():

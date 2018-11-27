@@ -110,3 +110,15 @@ def reset_token(token):
 @users.route('/new', methods=['GET', 'POST'])
 @login_required
 def new():
+    form = NewPostForm()
+
+    if form.validate_on_submit():
+        post = Post(title=form.title.data, content=form.content.data, user_id=current_user.id, language=form.language.data)
+
+        db.session.add(post)
+        db.session.commit()
+
+        flash('You post has been created successfully!', 'success')
+        return redirect(url_for('main.home'))
+
+    return render_template('create_post.html', title='New', form=form)
