@@ -60,17 +60,21 @@ class Comment(db.Model):
     fk_User = db.Column(db.Integer, db.ForeignKey('user.userID'), nullable=False)
 
 class PostLanguage(db.Model):
+    post_language_id = db.Column(db.Integer, primary_key=True)
     fk_Post = db.Column(db.Integer, db.ForeignKey('post.postID'), nullable=False)
     fk_Language = db.Column(db.Integer, db.ForeignKey('language.languageID'), nullable=False)
 
 class PostLike(db.Model):
+    post_like_id = db.Column(db.Integer, primary_key=True)
     fk_Post = db.Column(db.Integer, db.ForeignKey('post.postID'), nullable=False)
     fk_User = db.Column(db.Integer, db.ForeignKey('user.userID'), nullable=False)
 
 class CommentLike(db.Model):
+    comment_like_id = db.Column(db.Integer, primary_key=True)
     fk_Comment = db.Column(db.Integer, db.ForeignKey('comment.commentID'), nullable=False)
     fk_User = db.Column(db.Integer, db.ForeignKey('user.userID'), nullable=False)
 
 class PostTag(db.Model):
+    post_tag_id = db.Column(db.Integer, primary_key=True)
     fk_Post = db.Column(db.Integer, db.ForeignKey('post.postID'), nullable=False)
     fk_Tag = db.Column(db.Integer, db.ForeignKey('tag.tagID'), nullable=False)
