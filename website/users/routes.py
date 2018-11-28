@@ -113,7 +113,7 @@ def new():
     form = NewPostForm()
 
     if form.validate_on_submit():
-        post = Post(title=form.title.data, content=form.content.data, user_id=current_user.id, language=form.language.data)
+        post = Post(title=form.title.data, code=form.content.data, id=current_user.id, language=form.language.data)
 
         db.session.add(post)
         db.session.commit()

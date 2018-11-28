@@ -35,46 +35,54 @@ class User(db.Model, UserMixin):
         return f"User('{self.username}', '{self.email}', '{self.image_file}')"
 
 
+
+
+'''
+
+WATCH https://www.youtube.com/watch?v=juPQ04_twtA
+
+'''
+
 class Post(db.Model):
-    postID = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(50), nullable=False)
     datetime = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     code = db.Column(db.Text, nullable=False)
     description = db.Column(db.Text, nullable=False)
-    fk_tag = db.Column(db.Integer, db.ForeignKey('tag.tagID'))
-    fk_user = db.Column(db.Integer, db.ForeignKey('user.userID'), nullable=False)
+    fk_tag = db.Column(db.Integer, db.ForeignKey('tag.id'))
+    fk_user = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
 class Language(db.Model):
-    languageID = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30), nullable=False)
 
 class Tag(db.Model):
-    tagID = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), nullable=False)
 
 class Comment(db.Model):
-    commentID = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text, nullable=False)
     datetime = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    fk_Post = db.Column(db.Integer, db.ForeignKey('post.postID'), nullable=False)
-    fk_User = db.Column(db.Integer, db.ForeignKey('user.userID'), nullable=False)
+    fk_Post = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
+    fk_User = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
 class PostLanguage(db.Model):
-    post_language_id = db.Column(db.Integer, primary_key=True)
-    fk_Post = db.Column(db.Integer, db.ForeignKey('post.postID'), nullable=False)
-    fk_Language = db.Column(db.Integer, db.ForeignKey('language.languageID'), nullable=False)
+    id = db.Column(db.Integer, primary_key=True)
+    fk_Post = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
+    fk_Language = db.Column(db.Integer, db.ForeignKey('language.id'), nullable=False)
 
 class PostLike(db.Model):
-    post_like_id = db.Column(db.Integer, primary_key=True)
-    fk_Post = db.Column(db.Integer, db.ForeignKey('post.postID'), nullable=False)
-    fk_User = db.Column(db.Integer, db.ForeignKey('user.userID'), nullable=False)
+    id = db.Column(db.Integer, primary_key=True)
+    fk_Post = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
+    fk_User = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
 class CommentLike(db.Model):
-    comment_like_id = db.Column(db.Integer, primary_key=True)
-    fk_Comment = db.Column(db.Integer, db.ForeignKey('comment.commentID'), nullable=False)
-    fk_User = db.Column(db.Integer, db.ForeignKey('user.userID'), nullable=False)
+    id = db.Column(db.Integer, primary_key=True)
+    fk_Comment = db.Column(db.Integer, db.ForeignKey('comment.id'), nullable=False)
+    fk_User = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
 class PostTag(db.Model):
-    post_tag_id = db.Column(db.Integer, primary_key=True)
-    fk_Post = db.Column(db.Integer, db.ForeignKey('post.postID'), nullable=False)
-    fk_Tag = db.Column(db.Integer, db.ForeignKey('tag.tagID'), nullable=False)
+    id = db.Column(db.Integer, primary_key=True)
+    fk_Post = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
+    fk_Tag = db.Column(db.Integer, db.ForeignKey('tag.id'), nullable=False)
