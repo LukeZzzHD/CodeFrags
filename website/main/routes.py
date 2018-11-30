@@ -1,8 +1,7 @@
 from flask import render_template, request, Blueprint, flash
-from website.models import Post
+from website.models import Post, Language
 
 main = Blueprint('main', __name__)
-
 
 @main.route("/")
 @main.route("/home")

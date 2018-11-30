@@ -43,17 +43,12 @@ class Post(db.Model):
     datetime = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     code = db.Column(db.Text, nullable=False)
     description = db.Column(db.Text, nullable=False)
-    tags = db.relationship('Tag', backref='post', lazy=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     language_id = db.Column(db.Integer, db.ForeignKey('language.id'))
     user_likes = db.relationship('PostLike', backref='post', lazy=True)
     comments = db.relationship('Comment', backref='post')
 
 
-class Tag(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(20), nullable=False)
-    post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
 
 
 class Language(db.Model):

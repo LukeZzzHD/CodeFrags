@@ -1,15 +1,14 @@
 {% for post in posts %}
 <div class="card">
   <div class="card-header">
-    <h3>{{ post.title }}</h3>
+    <h3>{{ post.title }} - By {{ post.author.username }}</h3>
   </div>
   <div class="card-body">
-    <code>
-      {{ post.content }}
-    </code>
+      {{ post.code }}
   </div>
   <div class="card-footer">
-    {{ Language.query.filter_by(post.language_id).first().name }}<br>
+    {{ post.description }}
+    <hr>
     {{ post.datetime }}
   </div>
 </div>

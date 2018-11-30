@@ -78,7 +78,6 @@ class NewPostForm(FlaskForm):
     language = SelectField('Programming language', validators=[DataRequired()], choices=[('javascript', 'Javascript'), ('csharp', 'C#'), ('cplusplus', 'C++'), ('python', 'Python'), ('c', 'C')])
     content = TextAreaField('Your Code', validators=[DataRequired()])
     description = TextAreaField('Post description', validators=[DataRequired()])
-    tags = StringField('Tags')
     submit = SubmitField('Post')
 
     def validate_post(self, title):

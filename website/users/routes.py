@@ -1,7 +1,7 @@
 from flask import render_template, url_for, flash, redirect, request, Blueprint
 from flask_login import login_user, current_user, logout_user, login_required
 from website import db, bcrypt
-from website.models import User, Post, Language, Comment, CommentLike, Tag
+from website.models import User, Post, Language, Comment, CommentLike
 from website.users.forms import (RegistrationForm, LoginForm, UpdateAccountForm,
                                    RequestResetForm, ResetPasswordForm, NewPostForm)
 from website.users.utils import save_picture, send_reset_email
@@ -113,24 +113,11 @@ def new():
     form = NewPostForm()
 
     if form.validate_on_submit():
-        tags = form.tags.data.split(" ")
 
-        for tag in tags:
-            db.session.add(Tag())
+        lang_id = Language.query.filter_by(name=form.language.data).first().id
 
-        post = Post(title=form.title.data, code=form.content.data, id=current_user.id, language_id=Language.query.filter_by(name=form.language.data).first().id, tags=Tag(name='testtag', post_id=current_user.id))
-
+        post = Post(title=form.title.data, code=form.content.data, user_id=current_user.id, language_id=lang_id, description=form.description.data)
         db.session.add(post)
-
-        flash(form.tags.data.split(" "), 'warning')
-
-        '''
-        for tag in tags:
-            if len(tag) > 2:
-                flash(tag, 'danger')
-                #db.session.add(Tag(name=tag, post_id=current_user.id))
-        '''
-
         db.session.commit()
 
         flash('You post has been created successfully!', 'success')
