@@ -9,7 +9,7 @@
     </code>
   </div>
   <div class="card-footer">
-    {{ post.language }}<br>
+    {{ Language.query.filter_by(post.language_id).first().name }}<br>
     {{ post.datetime }}
   </div>
 </div>

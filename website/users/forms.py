@@ -75,9 +75,9 @@ class ResetPasswordForm(FlaskForm):
 
 class NewPostForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired(), Length(min=3, max=30)])
-    language = SelectField('Programming language', validators=[DataRequired()], choices=[('js', 'Javascript'), ('csharp', 'C#')])
+    language = SelectField('Programming language', validators=[DataRequired()], choices=[('javascript', 'Javascript'), ('csharp', 'C#'), ('cplusplus', 'C++'), ('python', 'Python'), ('c', 'C')])
     content = TextAreaField('Your Code', validators=[DataRequired()])
-    content = TextAreaField('Your Code', validators=[DataRequired()])
+    description = TextAreaField('Post description', validators=[DataRequired()])
     tags = StringField('Tags')
     submit = SubmitField('Post')
 

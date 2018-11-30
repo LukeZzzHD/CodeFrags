@@ -17,8 +17,8 @@ class User(db.Model, UserMixin):
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
     password = db.Column(db.String(60), nullable=False)
     posts = db.relationship('Post', backref='author', lazy=True)
-    liked_comments = db.relationship('Comment', secondary='commentlike')
-    liked_posts = db.relationship('Post', secondary='postlike')
+    liked_comments = db.relationship('CommentLike', backref='user', lazy=True)
+    liked_posts = db.relationship('PostLike', backref='user', lazy=True)
 
     def get_reset_token(self, expires_sec=1800):
         s = Serializer(current_app.config['SECRET_KEY'], expires_sec)
@@ -37,14 +37,6 @@ class User(db.Model, UserMixin):
         return f"User('{self.username}', '{self.email}', '{self.image_file}')"
 
 
-
-
-'''
-
-WATCH https://www.youtube.com/watch?v=juPQ04_twtA
-
-'''
-
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(50), nullable=False)
@@ -53,31 +45,39 @@ class Post(db.Model):
     description = db.Column(db.Text, nullable=False)
     tags = db.relationship('Tag', backref='post', lazy=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    language = db.relationship('Language', lazy=True)
+    language_id = db.Column(db.Integer, db.ForeignKey('language.id'))
+    user_likes = db.relationship('PostLike', backref='post', lazy=True)
+    comments = db.relationship('Comment', backref='post')
+
+
+class Tag(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(20), nullable=False)
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
+
 
 class Language(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30), nullable=False)
 
-class Tag(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(20), nullable=False)
-
-
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text, nullable=False)
     datetime = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    post = db.relationship('Post', backref='comment', lazy=True)
-    user = db.relationship('User')
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user_likes = db.relationship('CommentLike', backref='comment', lazy=True)
+
 
 
 class CommentLike(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     comment_id = db.Column(db.Integer, db.ForeignKey('comment.id'))
+    count = db.Column(db.Integer, nullable=False, default=0)
 
 class PostLike(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
+    count = db.Column(db.Integer, nullable=False, default=0)
