@@ -8,6 +8,7 @@ main = Blueprint('main', __name__)
 def home():
     posts = Post.query.filter_by()\
         .order_by(Post.datetime.desc())
+
     return render_template('home.html', title="Home", posts=posts)
 
 @main.route("/about")

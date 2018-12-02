@@ -47,6 +47,7 @@ class Post(db.Model):
     language_id = db.Column(db.Integer, db.ForeignKey('language.id'))
     user_likes = db.relationship('PostLike', backref='post', lazy=True)
     comments = db.relationship('Comment', backref='post')
+    language = db.relationship('Language', backref='language')
 
 
 

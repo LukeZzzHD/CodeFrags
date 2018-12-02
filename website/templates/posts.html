@@ -1,13 +1,11 @@
 {% for post in posts %}
-<div class="card">
+<div class="card w-75 ml-auto mr-auto">
   <div class="card-header">
     <h3>{{ post.title }} - By {{ post.author.username }}</h3>
   </div>
-  <div class="card-body">
-      <pre class="language-javascript">
-        <code>
-          {{ post.code }}
-        </code>
+  <div class="card-body p-0">
+      <pre class="language-javascript m-0">
+        <code>{{ post.code }}</code>
       </pre>
   </div>
   <div class="card-footer">
