@@ -4,7 +4,11 @@
     <h3>{{ post.title }} - By {{ post.author.username }}</h3>
   </div>
   <div class="card-body">
-      {{ post.code }}
+      <pre class="language-javascript">
+        <code>
+          {{ post.code }}
+        </code>
+      </pre>
   </div>
   <div class="card-footer">
     {{ post.description }}
