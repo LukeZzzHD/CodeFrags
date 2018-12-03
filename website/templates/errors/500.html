@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="card w-50 pt-3 m-auto text-center">
+  <h1>We are experiencing some trouble on our side... - Error 403</h1>
+  <hr>
+  <h3>Please try again in the near future</h3>
+  <h5><a href="{{ url_for('main.home') }}">Go home🏠</a></h5>
+</div>
+{% endblock content %}

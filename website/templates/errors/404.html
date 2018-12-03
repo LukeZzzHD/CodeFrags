@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="card w-50 pt-3 m-auto text-center">
+  <h1>Oops, that page doesn't exist - Error 404</h1>
+  <hr>
+  <h3>Please check the url</h3>
+  <h5><a href="{{ url_for('main.home') }}">Go home🏠</a></h5>
+</div>
+{% endblock content %}

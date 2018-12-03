@@ -116,7 +116,7 @@ def new():
 
         lang_id = Language.query.filter_by(name=form.language.data).first().id
 
-        post = Post(title=form.title.data, code=form.content.data, user_id=current_user.id, language_id=lang_id, description=form.description.data)
+        post = Post(title=form.title.data, code=form.code.data, user_id=current_user.id, language_id=lang_id, description=form.description.data)
         db.session.add(post)
         db.session.commit()
 

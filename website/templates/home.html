@@ -9,13 +9,17 @@
       </div>
     </form>
   </div>
-  <div class="jumbotron p-3 bg-light">
+  <div class="jumbotron pt-5 bg-ligth">
     {% include "posts.html" %}
   </div>
 </div>
 <div class="col-xl-4 col-lg-4 col-md-4 col-xs-12 float-right">
   <div class="jumbotron bg-light">
-
+    <h1>Page Overview:</h1>
+    <hr>
+    <div class="card p-3">
+      <h4>There are {{ usercount }} accounts registered on CodeFrags and {{ postcount }} posts have allready been posted! That's amazing!❤️</h4>
+    </div>
   </div>
 </div>
 {% endblock content %}

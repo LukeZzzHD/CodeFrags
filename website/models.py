@@ -50,8 +50,6 @@ class Post(db.Model):
     language = db.relationship('Language', backref='language')
 
 
-
-
 class Language(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30), nullable=False)
@@ -70,10 +68,8 @@ class CommentLike(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     comment_id = db.Column(db.Integer, db.ForeignKey('comment.id'))
-    count = db.Column(db.Integer, nullable=False, default=0)
 
 class PostLike(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
-    count = db.Column(db.Integer, nullable=False, default=0)

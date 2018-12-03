@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="card w-50 pt-3 m-auto text-center">
+  <h1>You don't have permission to do that! - Error 403</h1>
+  <hr>
+  <h3>Please check your account</h3>
+  <h5><a href="{{ url_for('main.home') }}">Go home🏠</a></h5>
+</div>
+{% endblock content %}

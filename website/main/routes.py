@@ -1,5 +1,5 @@
 from flask import render_template, request, Blueprint, flash
-from website.models import Post, Language
+from website.models import Post, Language, User
 
 main = Blueprint('main', __name__)
 
@@ -9,7 +9,10 @@ def home():
     posts = Post.query.filter_by()\
         .order_by(Post.datetime.desc())
 
-    return render_template('home.html', title="Home", posts=posts)
+    usercount = User.query.count()
+    postcount = Post.query.count()
+
+    return render_template('home.html', title="Home", posts=posts, usercount=usercount, postcount=postcount)
 
 @main.route("/about")
 def about():
