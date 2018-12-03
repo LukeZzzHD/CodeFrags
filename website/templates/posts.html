@@ -4,7 +4,7 @@
     <h3>{{ post.title }} - By {{ post.author.username }}</h3>
   </div>
   <div class="card-body p-0">
-      <pre class="language-javascript m-0">
+      <pre class="language-{{ post.language.name }} m-0">
         <code>{{ post.code }}</code>
       </pre>
   </div>
