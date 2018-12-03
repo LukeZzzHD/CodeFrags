@@ -1,7 +1,12 @@
 {% for post in posts %}
 <div class="card w-75 ml-auto mr-auto">
   <div class="card-header">
-    <h3>{{ post.title }} - By {{ post.author.username }}</h3>
+    <div class="w-25">
+      <img style="width:50px;float:left;" class="rounded-circle account-img" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}" alt="">
+    </div>
+    <div class="felx-column">
+      <h4 style="position:relative;left:15px;top:10px;">{{ post.title }} - By {{ post.author.username }}</h4>
+    </div>
   </div>
   <div class="card-body p-0">
       <pre class="language-{{ post.language.name }} m-0">
@@ -9,9 +14,9 @@
       </pre>
   </div>
   <div class="card-footer">
-    {{ post.description }}
+    <p>{{ post.description }}</p>
     <hr>
-    {{ post.datetime }}
+    <small><b>Posted:</b> {{ post.datetime.strftime('%d-%m-%Y') }}</small>
   </div>
 </div>
 {% endfor %}
