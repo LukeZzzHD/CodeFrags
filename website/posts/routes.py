@@ -62,3 +62,13 @@ def delete_post(id):
     db.session.commit()
     flash('Your post has been deleted!', 'success')
     return redirect(url_for('main.home'))
+
+@posts.route("/search", methods=['GET', 'POST'])
+def search():
+    q = request.args.get('q')
+    flash('You searched: ' + q, 'primary')
+    posts = Post.query.filter(Post.title.like("%" + q + "%")).all()
+
+    return render_template('results.html', posts=posts)
+
+    #return redirect(url_for('main.home'))

@@ -1,31 +1,37 @@
-{% for post in posts %}
-<div class="card w-75 ml-auto mr-auto m-5 border-secondary">
-  <div class="card-header">
-    <div class="w-25">
-      <img style="width:50px;float:left;" class="rounded-circle account-img" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}" alt="">
+{% if posts %}
+  {% for post in posts %}
+  <div class="card w-75 ml-auto mr-auto m-5 border-secondary">
+    <div class="card-header">
+      <div class="w-25">
+        <img style="width:50px;float:left;" class="rounded-circle account-img" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}" alt="">
+      </div>
+      <div class="felx-column">
+        <h4 style="position:relative;left:15px;top:10px;"><a href="{{ url_for('posts.post', id=post.id) }}">{{ post.title }}</a><small> - By {{ post.author.username }}</small></h4>
+      </div>
     </div>
-    <div class="felx-column">
-      <h4 style="position:relative;left:15px;top:10px;"><a href="{{ url_for('posts.post', id=post.id) }}">{{ post.title }}</a><small> - By {{ post.author.username }}</small></h4>
+    <div class="card-body p-0">
+        <pre class="language-{{ post.language.name }} m-0">
+          <code>{{ post.code }}</code>
+        </pre>
+    </div>
+    <div class="card-footer">
+      <p>{{ post.description }}</p>
+      <hr>
+      <small><b>Posted:</b> {{ post.datetime.strftime('%d-%m-%Y') }}</small>
+      {% if post.author == current_user %}
+      <hr>
+      <form action="{{ url_for('posts.update_post', id=post.id) }}" method="GET">
+        <input class="btn btn-success mb-1" type="submit" value="Update">
+      </form>
+      <form action="{{ url_for('posts.delete_post', id=post.id) }}" method="POST">
+        <input class="btn btn-danger" type="submit" value="Delete">
+      </form>
+      {% endif %}
     </div>
   </div>
-  <div class="card-body p-0">
-      <pre class="language-{{ post.language.name }} m-0">
-        <code>{{ post.code }}</code>
-      </pre>
+  {% endfor %}
+{% else %}
+  <div class="text-center w-100">
+    <h1>No results found...</h1>
   </div>
-  <div class="card-footer">
-    <p>{{ post.description }}</p>
-    <hr>
-    <small><b>Posted:</b> {{ post.datetime.strftime('%d-%m-%Y') }}</small>
-    {% if post.author == current_user %}
-    <hr>
-    <form action="{{ url_for('posts.update_post', id=post.id) }}" method="GET">
-      <input class="btn btn-success mb-1" type="submit" value="Update">
-    </form>
-    <form action="{{ url_for('posts.delete_post', id=post.id) }}" method="POST">
-      <input class="btn btn-danger" type="submit" value="Delete">
-    </form>
-    {% endif %}
-  </div>
-</div>
-{% endfor %}
+{% endif %}

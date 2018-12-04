@@ -1,4 +1,4 @@
-from flask import render_template, request, Blueprint, flash
+from flask import render_template, request, Blueprint, flash, send_from_directory, redirect, url_for
 from website.models import Post, Language, User
 
 main = Blueprint('main', __name__)
@@ -6,6 +6,7 @@ main = Blueprint('main', __name__)
 @main.route("/")
 @main.route("/home")
 def home():
+
     posts = Post.query.filter_by()\
         .order_by(Post.datetime.desc())
 
@@ -21,3 +22,7 @@ def about():
 @main.route("/contact")
 def contact():
     return render_template('contact.html', title='Contact')
+
+@main.route('/help/<path:path>')
+def help(path):
+    return send_from_directory('static', path)
