@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block content %}
+  <div class="card w-100 p-5 ml-auto mr-auto mt-0">
+    <div class="media">
+      <img style="height: 75px" class="rounded-circle account-img mb-4 mr-4" src="{{ url_for('static', filename='profile_pics/' + user.image_file) }}">
+      <div class="media-body h-100">
+        <h2 class="account-heading">{{ user.username }}</h2>
+        <p class="text-secondary"><a href="mailto:user.email">{{ user.email }}</a></p>
+      </div>
+    </div>
+  </div>
+  <div class="card w-75 p-5 ml-auto mr-auto">
+    <h3>Posts by {{ user.username }}:</h3>
+    {% include "posts.html" %}
+  </div>
+{% endblock content %}
