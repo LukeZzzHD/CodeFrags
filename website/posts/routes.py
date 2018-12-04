@@ -25,6 +25,7 @@ def new_post():
 @posts.route("/post/<int:id>")
 def post(id):
     post = Post.query.get_or_404(id)
+
     return render_template('post.html', title=post.title, post=post)
 
 
@@ -65,10 +66,14 @@ def delete_post(id):
 
 @posts.route("/search", methods=['GET', 'POST'])
 def search():
-    q = request.args.get('q')
-    flash('You searched: ' + q, 'primary')
-    posts = Post.query.filter(Post.title.like("%" + q + "%")).all()
 
-    return render_template('results.html', posts=posts)
+    q = request.args.get('q')
+    if q.strip() != "":
+        flash('You searched: ' + q, 'primary')
+        posts = Post.query.filter(Post.title.like("%" + q + "%")).all()
+
+        return render_template('results.html', posts=posts)
+
+    return redirect(url_for('main.home'))
 
     #return redirect(url_for('main.home'))

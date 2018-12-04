@@ -1,5 +1,6 @@
 from flask import render_template, request, Blueprint, flash, send_from_directory, redirect, url_for
 from website.models import Post, Language, User
+from website import db
 
 main = Blueprint('main', __name__)
 

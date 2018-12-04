@@ -9,3 +9,7 @@ class PostForm(FlaskForm):
     code = TextAreaField('Your Code', validators=[DataRequired()])
     description = TextAreaField('Post description', validators=[DataRequired()])
     submit = SubmitField('Post')
+
+class CommentForm(FlaskForm):
+    comment = TextAreaField('Your Comment', validators=[DataRequired(), Length(max=500)])
+    submit = SubmitField('Comment')

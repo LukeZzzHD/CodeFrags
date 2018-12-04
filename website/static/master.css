@@ -26,3 +26,8 @@
 .code-description-textarea {
   height: 120px;
 }
+
+#comment {
+  height: 80px;
+  font-size: 14px;
+}

@@ -60,7 +60,8 @@ class Comment(db.Model):
     datetime = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    user_likes = db.relationship('CommentLike', backref='comment', lazy=True)
+    user_likes = db.relationship('CommentLike', backref='likes', lazy=True)
+    user = db.relationship('User', backref='author')
 
 
 

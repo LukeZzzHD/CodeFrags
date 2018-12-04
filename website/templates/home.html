@@ -1,11 +1,11 @@
 {% extends "layout.html" %}
 {% block content %}
 <div class="col-xl-8 col-lg-8 col-md-8 col-xs-12 float-left">
-  <div class="form-inline w-100 justify-content-center mb-3">
+  <div class="form-inline w-100 justify-content-center mb-3 pos sticky-top">
     <form class="input-group w-100" method="GET" action="{{ url_for('posts.search') }}">
       <input class="form-control" name="q" placeholder="Search Here" autocomplete="off" autofocus="autofocus" type="text" spellcheck="false">
       <div class="input-group-btn">
-          <input class="btn btn-outline-success" type="submit" value="Search">
+          <input class="btn btn-success" type="submit" value="Search">
       </div>
     </form>
   </div>
