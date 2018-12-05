@@ -2,7 +2,7 @@ from flask import (render_template, url_for, flash,
                    redirect, request, abort, Blueprint)
 from flask_login import current_user, login_required
 from website import db
-from website.models import Post, Language, Comment
+from website.models import Post, Language, Comment, PostLike
 from website.posts.forms import PostForm, CommentForm
 
 posts = Blueprint('posts', __name__)
@@ -89,5 +89,19 @@ def search():
         posts = Post.query.filter(Post.title.like("%" + q.replace(" ", "%%") + "%")).all()
 
         return render_template('results.html', posts=posts)
+
+    return redirect(url_for('main.home'))
+
+
+@posts.route("/post/<int:id>/like")
+@login_required
+def like(id):
+    post = Post.query.get_or_404(id)
+    isliked = PostLike.query.filter_by(user_id=current_user.id, post_id=post.id).first()
+    if not isliked:
+        like = PostLike(user_id=current_user.id, post_id=post.id)
+        db.session.add(like)
+        db.session.commit()
+        flash('Post was liked', 'success')
 
     return redirect(url_for('main.home'))
