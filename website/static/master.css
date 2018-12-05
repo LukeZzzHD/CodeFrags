@@ -27,7 +27,7 @@
   height: 120px;
 }
 
-#comment {
+.comment_field {
   height: 80px;
   font-size: 14px;
 }

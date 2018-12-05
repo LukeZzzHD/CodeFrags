@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
-<div class="col-xl-8 col-lg-8 col-md-8 col-xs-12 float-left">
-  <div class="form-inline w-100 justify-content-center mb-3 pos sticky-top">
+<div class="col-12 float-left">
+  <div class="form-inline w-100 justify-content-center mb-3">
     <form class="input-group w-100" method="GET" action="{{ url_for('posts.search') }}">
       <input class="form-control" name="q" placeholder="Search Here" autocomplete="off" autofocus="autofocus" type="text" spellcheck="false">
       <div class="input-group-btn">
@@ -12,14 +12,11 @@
   <div class="jumbotron pt-5 bg-ligth">
     {% include "posts.html" %}
   </div>
-</div>
-<div class="col-xl-4 col-lg-4 col-md-4 col-xs-12 float-right">
-  <div class="jumbotron bg-light">
-    <h1>Page Overview:</h1>
-    <hr>
-    <div class="card p-3">
-      <h4>There are {{ usercount }} accounts registered on CodeFrags and {{ postcount }} posts have allready been posted! That's amazing!❤️</h4>
-    </div>
+  <div class="card p-3 mb-4 text-center">
+    <h4>There are {{ usercount }} accounts registered on CodeFrags and {{ postcount }} posts have allready been posted! That's amazing!❤️</h4>
+  </div>
+  <div class="w-100 text-center">
+    <small class="text-muted">CodeFrags Inc. 2018</small>
   </div>
 </div>
 {% endblock content %}

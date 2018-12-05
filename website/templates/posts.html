@@ -15,9 +15,12 @@
         </pre>
     </div>
     <div class="card-footer">
+      <small><b>Description:</b></small>
       <p>{{ post.description }}</p>
       <hr>
-      <small><b>Posted:</b> {{ post.datetime.strftime('%d-%m-%Y') }}</small>
+      <small><b>Posted:</b> {{ post.datetime.strftime('%d.%m.%Y') }}</small>
+      <hr>
+      <a class="btn btn-primary" href="{{ url_for('posts.post', id=post.id) }}">comment</a><br>
       {% if post.author == current_user %}
       <hr>
       <form action="{{ url_for('posts.update_post', id=post.id) }}" method="GET">
@@ -32,6 +35,6 @@
   {% endfor %}
 {% else %}
   <div class="text-center w-100">
-    <h1>No results found...</h1>
+    <h1>No posts found...</h1>
   </div>
 {% endif %}

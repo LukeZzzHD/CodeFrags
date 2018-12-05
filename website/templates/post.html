@@ -15,9 +15,30 @@
       </pre>
   </div>
   <div class="card-footer">
+    <small><b>Description:</b></small><br>
     <p>{{ post.description }}</p>
     <hr>
-    <small><b>Posted:</b> {{ post.datetime.strftime('%d-%m-%Y') }}</small>
+    <small><b>Posted:</b> {{ post.datetime.strftime('%d.%m.%Y') }}</small>
+    <hr>
+    {% for comment in post.comments %}
+    <small><b>{{ comment.user.username }}</b> - {{ comment.content }}<span class="text-muted"> • {{ comment.datetime.strftime('%H:%M - %d.%m.%Y') }}</span></small><br>
+    {% endfor %}
+    <div class="form-inline">
+      <form class="w-100" action="" method="post">
+        {{ form.hidden_tag() }}
+        {% if form.comment.errors %}
+            {{ form.comment(class="form-control form-control-lg is-invalid comment_field w-100 p-1") }}
+            <div class="invalid-feedback">
+                {% for error in form.comment.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+        {% else %}
+            {{ form.comment(class="form-control form-control-lg comment_field w-100 p-1 mt-2") }}
+        {% endif %}
+        {{ form.submit(class="btn btn-primary mt-1") }}
+      </form>
+    </div>
     {% if post.author == current_user %}
     <hr>
     <form action="{{ url_for('posts.update_post', id=post.id) }}" method="GET">

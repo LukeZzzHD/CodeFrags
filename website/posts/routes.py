@@ -2,8 +2,8 @@ from flask import (render_template, url_for, flash,
                    redirect, request, abort, Blueprint)
 from flask_login import current_user, login_required
 from website import db
-from website.models import Post, Language
-from website.posts.forms import PostForm
+from website.models import Post, Language, Comment
+from website.posts.forms import PostForm, CommentForm
 
 posts = Blueprint('posts', __name__)
 
@@ -22,11 +22,27 @@ def new_post():
                            form=form, legend='New Post')
 
 
-@posts.route("/post/<int:id>")
+@posts.route("/post/<int:id>", methods=['GET', 'POST'])
 def post(id):
     post = Post.query.get_or_404(id)
+    form = CommentForm()
+    if form.validate_on_submit():
+        if current_user.is_authenticated:
+            comment = Comment(content=form.comment.data, user_id=current_user.id, post_id=post.id)
+            print(comment)
+            db.session.add(comment)
+            db.session.commit()
+            flash('Your comment has been created!', 'success')
 
-    return render_template('post.html', title=post.title, post=post)
+            return redirect(url_for('main.home'))
+        else:
+            flash('Login to write a comment!', 'primary')
+            return redirect(url_for('users.login'))
+
+    for error in form.errors:
+        flash(error)
+
+    return render_template('post.html', title=post.title, post=post, form=form)
 
 
 @posts.route("/post/<int:id>/update", methods=['GET', 'POST'])
@@ -70,10 +86,8 @@ def search():
     q = request.args.get('q')
     if q.strip() != "":
         flash('You searched: ' + q, 'primary')
-        posts = Post.query.filter(Post.title.like("%" + q + "%")).all()
+        posts = Post.query.filter(Post.title.like("%" + q.replace(" ", "%%") + "%")).all()
 
         return render_template('results.html', posts=posts)
 
     return redirect(url_for('main.home'))
-
-    #return redirect(url_for('main.home'))
