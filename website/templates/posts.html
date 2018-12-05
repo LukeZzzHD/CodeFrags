@@ -15,7 +15,7 @@
         </pre>
     </div>
     <div class="card-footer">
-      <a href="#"><i class="material-icons">favorite_border</i></a><small style="font-size: 30px;"> {{ post.user_likes|length }}</small><br>
+      <a href="{{ url_for('posts.like', id=post.id) }}"><i class="material-icons like_button">favorite_border</i></a><small style="font-size: 30px;"> {{ post.user_likes|length }}</small><br>
       <small><b>Description:</b></small>
       <p>{{ post.description }}</p>
       <hr>
