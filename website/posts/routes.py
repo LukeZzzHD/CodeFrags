@@ -1,6 +1,7 @@
 from flask import (render_template, url_for, flash,
                    redirect, request, abort, Blueprint)
 from flask_login import current_user, login_required
+from website.main.routes import getLikeUrl, getLikeIcon
 from website import db
 from website.models import Post, Language, Comment, PostLike
 from website.posts.forms import PostForm, CommentForm
@@ -88,7 +89,7 @@ def search():
         flash('You searched: ' + q, 'primary')
         posts = Post.query.filter(Post.title.like("%" + q.replace(" ", "%%") + "%")).all()
 
-        return render_template('results.html', posts=posts)
+        return render_template('results.html', posts=posts, getLikeUrl=getLikeUrl, getLikeIcon=getLikeIcon)
 
     return redirect(url_for('main.home'))
 
