@@ -43,7 +43,7 @@ def post(id):
     for error in form.errors:
         flash(error)
 
-    return render_template('post.html', title=post.title, post=post, form=form)
+    return render_template('post.html', title=post.title, post=post, form=form, getLikeUrl=getLikeUrl, getLikeIcon=getLikeIcon)
 
 
 @posts.route("/post/<int:id>/update", methods=['GET', 'POST'])

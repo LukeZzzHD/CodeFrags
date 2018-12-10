@@ -6,7 +6,7 @@
       <img style="width:50px;float:left;" class="rounded-circle account-img" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}" alt="">
     </div>
     <div class="felx-column">
-      <h4 style="position:relative;left:15px;top:10px;"><a href="{{ url_for('posts.post', id=post.id) }}">{{ post.title }}</a><small> - By {{ post.author.username }}</small></h4>
+      <h4 style="position:relative;left:15px;top:10px;"><a href="{{ url_for('posts.post', id=post.id) }}" style="text-decoration:none;">{{ post.title }}</a> - by <a alt="{{ post.author.username }}" title="{{ post.author.username }}" href="{{ url_for('users.user', username=post.author.username) }}" style="width:50px;height:50px;text-decoration:none;">{{ post.author.username }}</a></h4>
     </div>
   </div>
   <div class="card-body p-0">
@@ -15,30 +15,35 @@
       </pre>
   </div>
   <div class="card-footer">
-    <small><b>Description:</b></small><br>
+    {% if current_user.is_authenticated %}
+    <a href="{{ url_for(getLikeUrl(post), id=post.id) }}"><i class="material-icons like_button">{{ getLikeIcon(post) }}</i></a><small style="font-size: 30px;"> {{ post.user_likes|length }}</small><br>
+    {% endif %}
+    <small><b>Description:</b></small>
     <p>{{ post.description }}</p>
     <hr>
     <small><b>Posted:</b> {{ post.datetime.strftime('%d.%m.%Y') }}</small>
-    <hr>
+    {% if post.comments %}<hr>{% endif %}
     {% for comment in post.comments %}
-    <small><b>{{ comment.user.username }}</b> - {{ comment.content }}<span class="text-muted"> • {{ comment.datetime.strftime('%H:%M - %d.%m.%Y') }}</span></small><br>
+      <small><b>{{ comment.user.username }}</b> - {{ comment.content }}<span class="text-muted"> • {{ comment.datetime.strftime('%H:%M - %d.%m.%Y') }}</span></small><br>
     {% endfor %}
-    <div class="form-inline">
-      <form class="w-100" action="" method="post">
-        {{ form.hidden_tag() }}
-        {% if form.comment.errors %}
-            {{ form.comment(class="form-control form-control-lg is-invalid comment_field w-100 p-1") }}
-            <div class="invalid-feedback">
-                {% for error in form.comment.errors %}
-                    <span>{{ error }}</span>
-                {% endfor %}
-            </div>
-        {% else %}
-            {{ form.comment(class="form-control form-control-lg comment_field w-100 p-1 mt-2") }}
-        {% endif %}
-        {{ form.submit(class="btn btn-primary mt-1") }}
-      </form>
-    </div>
+    {% if current_user.is_authenticated %}
+      <div class="form-inline">
+        <form class="w-100" action="" method="post">
+          {{ form.hidden_tag() }}
+          {% if form.comment.errors %}
+              {{ form.comment(class="form-control form-control-lg is-invalid comment_field w-100 p-1") }}
+              <div class="invalid-feedback">
+                  {% for error in form.comment.errors %}
+                      <span>{{ error }}</span>
+                  {% endfor %}
+              </div>
+          {% else %}
+              {{ form.comment(class="form-control form-control-lg comment_field w-100 p-1 mt-2") }}
+          {% endif %}
+          {{ form.submit(class="btn btn-primary mt-1") }}
+        </form>
+      </div>
+    {% endif %}
     {% if post.author == current_user %}
     <hr>
     <form action="{{ url_for('posts.update_post', id=post.id) }}" method="GET">

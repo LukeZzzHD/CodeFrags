@@ -18,7 +18,7 @@ def getLikeUrl(post):
     return 'posts.like'
 
 @main.route("/")
-@main.route("/home")
+@main.route("/home", methods=['GET', 'POST'])
 def home():
 
     posts = Post.query.filter_by()\
