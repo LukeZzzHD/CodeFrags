@@ -11,5 +11,11 @@ class PostForm(FlaskForm):
     submit = SubmitField('Post')
 
 class CommentForm(FlaskForm):
-    comment = TextAreaField('Your Comment', validators=[DataRequired(), Length(min=1, max=500)])
+    comment = TextAreaField('Your Comment', validators=[DataRequired(), Length(min=1, max=500)], render_kw={
+        "autocomplete" : "off",
+        "autocorrect" : "off",
+        "autocapitalize" : "off",
+        "spellcheck" : "false"
+    })
+
     submit = SubmitField('Comment')

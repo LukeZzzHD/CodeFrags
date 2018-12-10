@@ -105,3 +105,15 @@ def like(id):
         flash('Post was liked', 'success')
 
     return redirect(url_for('main.home'))
+
+@posts.route("/post/<int:id>/unlike")
+@login_required
+def unlike(id):
+    post = Post.query.get_or_404(id)
+    isliked = PostLike.query.filter_by(user_id=current_user.id, post_id=post.id).first()
+    if  isliked:
+        db.session.delete(isliked)
+        db.session.commit()
+        flash('Post was unliked', 'secondary')
+
+    return redirect(url_for('main.home'))
