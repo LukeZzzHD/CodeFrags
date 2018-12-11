@@ -24,7 +24,9 @@
     <small><b>Posted:</b> {{ post.datetime.strftime('%H:%M - %d.%m.%Y') }}</small>
     {% if post.comments %}<hr>{% endif %}
     {% for comment in post.comments %}
-      <small><b><a href="{{ url_for('users.user', username=comment.user.username) }}">{{ comment.user.username }}</a></b> - {{ comment.content }}<span class="text-muted"> • {{ comment.datetime.strftime('%H:%M - %d.%m.%Y') }}</span></small><br><a href="{{ url_for('posts.delete_post', post_id=post.id, comment_id=comment.id) }}" class="btn btn-danger">delete</a>
+      <small><b><a href="{{ url_for('users.user', username=comment.user.username) }}">{{ comment.user.username }}</a></b> - {{ comment.content }}<span class="text-muted"> • {{ comment.datetime.strftime('%H:%M - %d.%m.%Y') }}</span></small>
+      {% if comment.user == current_user %}<a href="{{ url_for('posts.delete_comment', id=comment.id) }}" class="material-icons color-dark" style="text-decoration:none;font-size:20px;color:#dc3545;transform:translateY(5px);">delete_forever</a>{% endif %}
+      <br>
     {% endfor %}
     {% if current_user.is_authenticated %}
       <div class="form-inline">

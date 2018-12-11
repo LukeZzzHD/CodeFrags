@@ -46,13 +46,12 @@ def post(id):
     return render_template('post.html', title=post.title, post=post, form=form, getLikeUrl=getLikeUrl, getLikeIcon=getLikeIcon)
 
 
-@posts.route("/post/<int:post_id>/comment/<int:comment_id>/delete")
+@posts.route("/post/comment/<int:id>/delete")
 @login_required
-def delete_comment(post_id, comment_id):
-    post = Post.query.get_or_404(id=post_id)
-    comment = Comment.query.get_or_404(id=comment_id)
+def delete_comment(id):
+    comment = Comment.query.get_or_404(id)
 
-    if comment.author != current_user:
+    if comment.user != current_user:
         abort(403)
 
     db.session.delete(comment)
@@ -60,7 +59,7 @@ def delete_comment(post_id, comment_id):
 
     flash('Your comment has been deleted!', 'success')
 
-    return redirect(url_for('posts.post', id=post_id))
+    return redirect(url_for('main.home'))
 
 
 @posts.route("/post/<int:id>/update", methods=['GET', 'POST'])
