@@ -50,14 +50,15 @@ def post(id):
 @login_required
 def delete_comment(id):
     comment = Comment.query.get_or_404(id)
+    post = Post.query.get_or_404(comment.post_id)
 
-    if comment.user != current_user:
+    if comment.user != current_user and post.author != current_user:
         abort(403)
 
     db.session.delete(comment)
     db.session.commit()
 
-    flash('Your comment has been deleted!', 'success')
+    flash('The comment has been deleted!', 'success')
 
     return redirect(url_for('main.home'))
 

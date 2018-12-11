@@ -13,18 +13,21 @@
 
 .remove-icon {
   position: absolute;
-  right: 15px;
+  right: 18px;
   float: right;
   cursor: pointer;
   user-select: none;
 }
 
 .code-textarea {
+  font-family: Inconsolata;
   height: 300px;
+  font-size: 18px;
 }
 
 .code-description-textarea {
   height: 120px;
+  font-size: 15px;
 }
 
 .comment_field {
