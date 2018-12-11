@@ -3,14 +3,12 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from website.config import Config
-from website.badwords import BadWords
 
 db = SQLAlchemy()
 bcrypt = Bcrypt()
 login_manager = LoginManager()
 login_manager.login_view = 'users.login'
 login_manager.login_message_category = 'info'
-bad_words = BadWords().words
 
 def create_app(config_class=Config):
     app = Flask(__name__)
