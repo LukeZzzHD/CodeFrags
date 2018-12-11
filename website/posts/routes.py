@@ -1,9 +1,9 @@
 from flask import (render_template, url_for, flash,
                    redirect, request, abort, Blueprint)
 from flask_login import current_user, login_required
-from website.main.routes import getLikeUrl, getLikeIcon
+from website.main.routes import getLikeUrl, getLikeIcon, getCommentLikeUrl, getCommentLikeIcon
 from website import db
-from website.models import Post, Language, Comment, PostLike
+from website.models import Post, Language, Comment, PostLike, CommentLike
 from website.posts.forms import PostForm, CommentForm
 
 posts = Blueprint('posts', __name__)
@@ -43,7 +43,7 @@ def post(id):
     for error in form.errors:
         flash(error)
 
-    return render_template('post.html', title=post.title, post=post, form=form, getLikeUrl=getLikeUrl, getLikeIcon=getLikeIcon)
+    return render_template('post.html', title=post.title, post=post, form=form, getLikeUrl=getLikeUrl, getLikeIcon=getLikeIcon, getCommentLikeUrl=getCommentLikeUrl, getCommentLikeIcon=getCommentLikeIcon)
 
 
 @posts.route("/post/comment/<int:id>/delete")
@@ -62,6 +62,40 @@ def delete_comment(id):
 
     return redirect(url_for('main.home'))
 
+@posts.route("/post/comment/<int:id>/like")
+@login_required
+def like_comment(id):
+    comment = Comment.query.get_or_404(id)
+    like = CommentLike.query.filter_by(user_id=current_user.id, comment_id=id).first()
+
+    if not like:
+
+        newlike = CommentLike(comment_id=id, user_id=current_user.id)
+
+        db.session.add(newlike)
+        db.session.commit()
+
+        flash('Comment has been liked!', 'success')
+        return redirect(url_for('posts.post', id=comment.post_id))
+
+    flash('You\'ve allready liked this comment!', 'warning')
+    return redirect(url_for('posts.post', id=comment.post_id))
+
+@posts.route("/post/comment/<int:id>/unlike")
+@login_required
+def unlike_comment(id):
+    comment = Comment.query.get_or_404(id)
+    like = CommentLike.query.filter_by(user_id=current_user.id, comment_id=comment.id).first()
+
+    if like:
+        db.session.delete(like)
+        db.session.commit()
+
+        flash('Comment has been unliked!', 'secondary')
+        return redirect(url_for('posts.post', id=comment.post_id))
+
+    flash('You can\'t unlike this post, because you haven\'t liked it yet!', 'warning')
+    return redirect(url_for('posts.post', id=comment.post_id))
 
 @posts.route("/post/<int:id>/update", methods=['GET', 'POST'])
 @login_required

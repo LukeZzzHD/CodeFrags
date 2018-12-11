@@ -1,5 +1,5 @@
 from flask import render_template, request, Blueprint, flash, send_from_directory, redirect, url_for
-from website.models import Post, Language, User, PostLike
+from website.models import Post, Language, User, PostLike, CommentLike
 from flask_login import current_user
 from website import db
 
@@ -16,6 +16,19 @@ def getLikeUrl(post):
     if liked:
         return 'posts.unlike'
     return 'posts.like'
+
+
+def getCommentLikeIcon(comment):
+        liked = CommentLike.query.filter_by(user_id=current_user.id, comment_id=comment.id).first()
+        if liked:
+            return 'favorite'
+        return 'favorite_border'
+
+def getCommentLikeUrl(comment):
+    liked = CommentLike.query.filter_by(user_id=current_user.id, comment_id=comment.id).first()
+    if liked:
+        return 'posts.unlike_comment'
+    return 'posts.like_comment'
 
 @main.route("/")
 @main.route("/home", methods=['GET', 'POST'])

@@ -25,7 +25,12 @@
     {% if post.comments %}<hr>{% endif %}
     {% for comment in post.comments %}
       <small><b><a href="{{ url_for('users.user', username=comment.user.username) }}">{{ comment.user.username }}</a></b> - {{ comment.content }}<span class="text-muted"> • {{ comment.datetime.strftime('%H:%M - %d.%m.%Y') }}</span></small>
-      {% if comment.user == current_user or post.author == current_user %}<a href="{{ url_for('posts.delete_comment', id=comment.id) }}" class="material-icons color-dark" style="text-decoration:none;font-size:20px;color:#dc3545;transform:translateY(5px);">delete_forever</a>{% endif %}
+      {% if current_user.is_authenticated %}
+        <a href="{{ url_for(getCommentLikeUrl(comment), id=comment.id) }}" class="material-icons" style="text-decoration:none;font-size:20px;color:#dc3545;transform:translateY(5px);">{{ getCommentLikeIcon(comment) }}</a><small style="font-size: 20px;"> {{ comment.user_likes|length }}</small>
+      {% endif %}
+      {% if comment.user == current_user or post.author == current_user %}
+       <span class="text-muted"> • </span><a href="{{ url_for('posts.delete_comment', id=comment.id) }}" class="material-icons color-dark" style="text-decoration:none;font-size:20px;color:#dc3545;transform:translateY(5px);">delete_forever</a>
+      {% endif %}
       <br>
     {% endfor %}
     {% if current_user.is_authenticated %}
