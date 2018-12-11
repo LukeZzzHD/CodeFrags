@@ -35,15 +35,32 @@ def post(id):
             db.session.commit()
             flash('Your comment has been created!', 'success')
 
-            return redirect(url_for('main.home'))
-        else:
-            flash('Login to write a comment!', 'primary')
-            return redirect(url_for('users.login'))
+            return redirect(url_for('posts.post', id=id))
+
+        flash('Login to write a comment!', 'primary')
+        return redirect(url_for('users.login'))
 
     for error in form.errors:
         flash(error)
 
     return render_template('post.html', title=post.title, post=post, form=form, getLikeUrl=getLikeUrl, getLikeIcon=getLikeIcon)
+
+
+@posts.route("/post/<int:post_id>/comment/<int:comment_id>/delete")
+@login_required
+def delete_comment(post_id, comment_id):
+    post = Post.query.get_or_404(id=post_id)
+    comment = Comment.query.get_or_404(id=comment_id)
+
+    if comment.author != current_user:
+        abort(403)
+
+    db.session.delete(comment)
+    db.session.commit()
+
+    flash('Your comment has been deleted!', 'success')
+
+    return redirect(url_for('posts.post', id=post_id))
 
 
 @posts.route("/post/<int:id>/update", methods=['GET', 'POST'])

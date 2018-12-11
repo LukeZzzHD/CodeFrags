@@ -21,10 +21,10 @@
     <small><b>Description:</b></small>
     <p>{{ post.description }}</p>
     <hr>
-    <small><b>Posted:</b> {{ post.datetime.strftime('%d.%m.%Y') }}</small>
+    <small><b>Posted:</b> {{ post.datetime.strftime('%H:%M - %d.%m.%Y') }}</small>
     {% if post.comments %}<hr>{% endif %}
     {% for comment in post.comments %}
-      <small><b>{{ comment.user.username }}</b> - {{ comment.content }}<span class="text-muted"> • {{ comment.datetime.strftime('%H:%M - %d.%m.%Y') }}</span></small><br>
+      <small><b><a href="{{ url_for('users.user', username=comment.user.username) }}">{{ comment.user.username }}</a></b> - {{ comment.content }}<span class="text-muted"> • {{ comment.datetime.strftime('%H:%M - %d.%m.%Y') }}</span></small><br><a href="{{ url_for('posts.delete_post', post_id=post.id, comment_id=comment.id) }}" class="btn btn-danger">delete</a>
     {% endfor %}
     {% if current_user.is_authenticated %}
       <div class="form-inline">

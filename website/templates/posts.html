@@ -1,4 +1,4 @@
-{% if posts %}
+{% if posts.count() > 0 %}
   {% for post in posts %}
   <div class="card w-75 ml-auto mr-auto m-5 border-secondary">
     <div class="card-header">
@@ -21,7 +21,7 @@
       <small><b>Description:</b></small>
       <p>{{ post.description }}</p>
       <hr>
-      <small><b>Posted:</b> {{ post.datetime.strftime('%d.%m.%Y') }}</small>
+      <small><b>Posted:</b> {{ post.datetime.strftime('%H:%M - %d.%m.%Y') }}</small>
       {% if current_user.is_authenticated %}
         <hr>
         <a href="{{ url_for('posts.post', id=post.id) }}"><i class="material-icons text-dark">chat</i></a><br>
