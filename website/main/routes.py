@@ -33,14 +33,13 @@ def getCommentLikeUrl(comment):
 @main.route("/")
 @main.route("/home", methods=['GET', 'POST'])
 def home():
-
     posts = Post.query.filter_by()\
         .order_by(Post.datetime.desc())
 
     usercount = User.query.count()
     postcount = Post.query.count()
 
-    return render_template('home.html', title="Home", posts=posts, usercount=usercount, postcount=postcount, getLikeIcon=getLikeIcon, getLikeUrl=getLikeUrl)
+    return render_template('home.html', title="Home", posts=posts, usercount=usercount, postcount=postcount, getLikeIcon=getLikeIcon, getLikeUrl=getLikeUrl, resultlength=postcount)
 
 @main.route("/about")
 def about():

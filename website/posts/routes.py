@@ -139,8 +139,9 @@ def search():
     if q.strip() != "":
         flash('You searched: ' + q, 'primary')
         posts = Post.query.filter(Post.title.like("%" + q.replace(" ", "%%") + "%")).all()
+        resultlength = len(posts)
 
-        return render_template('results.html', posts=posts, getLikeUrl=getLikeUrl, getLikeIcon=getLikeIcon)
+        return render_template('results.html', posts=posts, getLikeUrl=getLikeUrl, getLikeIcon=getLikeIcon, resultlength=resultlength)
 
     return redirect(url_for('main.home'))
 
