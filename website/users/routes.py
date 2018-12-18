@@ -74,7 +74,9 @@ def user(username):
     posts = Post.query.filter_by(author=user)\
         .order_by(Post.datetime.desc())
 
-    return render_template('user_posts.html', posts=posts, user=user, getLikeIcon=getLikeIcon, getLikeUrl=getLikeUrl)
+    resultlength = posts.count()
+
+    return render_template('user_posts.html', posts=posts, user=user, resultlength=resultlength, getLikeIcon=getLikeIcon, getLikeUrl=getLikeUrl)
 
 
 @users.route('/new', methods=['GET', 'POST'])

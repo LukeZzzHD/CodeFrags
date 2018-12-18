@@ -3,7 +3,7 @@
   <div class="card w-75 ml-auto mr-auto m-5 border-secondary">
     <div class="card-header">
       <div class="w-25">
-        <img style="width:50px;float:left;" class="rounded-circle account-img" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}" alt="">
+        <img style="width:50px;height:50px;object-fit:cover;float:left;" class="rounded-circle account-img" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}" alt="">
       </div>
       <div class="felx-column">
         <h4 style="position:relative;left:15px;top:10px;"><a href="{{ url_for('posts.post', id=post.id) }}" style="text-decoration:none;">{{ post.title }}</a> - by <a alt="{{ post.author.username }}" title="{{ post.author.username }}" href="{{ url_for('users.user', username=post.author.username) }}" style="width:50px;height:50px;text-decoration:none;">{{ post.author.username }}</a></h4>
