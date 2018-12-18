@@ -4,3 +4,4 @@ Prism.plugins.NormalizeWhitespace.setDefaults({
 	'left-trim': true,
 	'right-trim': true,
 });
+
