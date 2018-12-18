@@ -49,6 +49,6 @@ def about():
 def contact():
     return render_template('contact.html', title='Contact')
 
-@main.route('/help/<path:path>')
-def help(path):
-    return send_from_directory('static', path)
+@main.route('/help')
+def help():
+    return send_from_directory('static', 'Benutzeranleitung.pdf')
