@@ -44,6 +44,7 @@ def login():
 @users.route("/logout")
 def logout():
     logout_user()
+    flash('You have been logged out.', 'secondary')
     return redirect(url_for('main.home'))
 
 
@@ -73,9 +74,7 @@ def user(username):
     user = User.query.filter_by(username=username).first_or_404()
     posts = Post.query.filter_by(author=user)\
         .order_by(Post.datetime.desc())
-
     resultlength = posts.count()
-
     return render_template('user_posts.html', posts=posts, user=user, resultlength=resultlength, getLikeIcon=getLikeIcon, getLikeUrl=getLikeUrl)
 
 
@@ -83,17 +82,11 @@ def user(username):
 @login_required
 def new():
     form = NewPostForm()
-
     if form.validate_on_submit():
-
         lang_id = Language.query.filter_by(name=form.language.data).first().id
-
         post = Post(title=form.title.data, code=form.code.data, user_id=current_user.id, language_id=lang_id, description=form.description.data)
         db.session.add(post)
         db.session.commit()
-
         flash('You post has been created successfully!', 'success')
-
         return redirect(url_for('main.home'))
-
     return render_template('create_post.html', title='New', form=form)

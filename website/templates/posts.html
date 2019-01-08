@@ -1,45 +1,46 @@
 {% if resultlength > 0 %}
-  {% for post in posts %}
-  <div class="card w-75 ml-auto mr-auto m-5 border-secondary">
-    <div class="card-header">
-      <div class="w-25">
-        <img style="width:50px;height:50px;object-fit:cover;float:left;" class="rounded-circle account-img" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}" alt="">
-      </div>
-      <div class="felx-column">
-        <h4 style="position:relative;left:15px;top:10px;"><a href="{{ url_for('posts.post', id=post.id) }}" style="text-decoration:none;">{{ post.title }}</a> - by <a alt="{{ post.author.username }}" title="{{ post.author.username }}" href="{{ url_for('users.user', username=post.author.username) }}" style="width:50px;height:50px;text-decoration:none;">{{ post.author.username }}</a></h4>
-      </div>
+{% for post in posts %}
+<div class="card w-75 ml-auto mr-auto m-5 border-secondary">
+  <div class="card-header">
+    <div class="w-25">
+      <img style="width:50px;height:50px;object-fit:cover;float:left;" class="rounded-circle account-img" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}" alt="">
     </div>
-    <div class="card-body p-0">
-        <pre class="language-{{ post.language.name }} m-0">
-          <code>{{ post.code }}</code>
-        </pre>
-    </div>
-    <div class="card-footer">
-      {% if current_user.is_authenticated %}
-      <a href="{{ url_for(getLikeUrl(post), id=post.id) }}"><i class="material-icons like_button">{{ getLikeIcon(post) }}</i></a><small style="font-size: 30px;"> {{ post.user_likes|length }}</small><br>
-      {% endif %}
-      <small><b>Description:</b></small>
-      <p>{{ post.description }}</p>
-      <hr>
-      <small><b>Posted:</b> {{ post.datetime.strftime('%H:%M - %d.%m.%Y') }}</small>
-      {% if current_user.is_authenticated %}
-        <hr>
-        <a href="{{ url_for('posts.post', id=post.id) }}"><i class="material-icons text-dark">chat</i></a><br>
-      {% endif %}
-      {% if post.author == current_user %}
-      <hr>
-      <form action="{{ url_for('posts.update_post', id=post.id) }}" method="GET">
-        <input class="btn btn-success mb-1" type="submit" value="Update">
-      </form>
-      <form action="{{ url_for('posts.delete_post', id=post.id) }}" method="POST">
-        <input class="btn btn-danger" type="submit" value="Delete">
-      </form>
-      {% endif %}
+    <div class="felx-column">
+      <h4 style="position:relative;left:15px;top:10px;">
+        <a href="{{ url_for('posts.post', id=post.id) }}" style="text-decoration:none;">{{ post.title }}</a> - by <a alt="{{ post.author.username }}" title="{{ post.author.username }}" href="{{ url_for('users.user', username=post.author.username) }}" style="width:50px;height:50px;text-decoration:none;">{{ post.author.username }}</a></h4>
     </div>
   </div>
-  {% endfor %}
+  <div class="card-body p-0">
+    <pre class="language-{{ post.language.name }} m-0">
+      <code>{{ post.code }}</code>
+    </pre>
+  </div>
+  <div class="card-footer">
+    {% if current_user.is_authenticated %}
+    <a href="{{ url_for(getLikeUrl(post), id=post.id) }}"><i class="material-icons like_button">{{ getLikeIcon(post) }}</i></a><small style="font-size: 30px;"> {{ post.user_likes|length }}</small><br>
+    {% endif %}
+    <small><b>Description:</b></small>
+    <p>{{ post.description }}</p>
+    <hr>
+    <small><b>Posted:</b> {{ post.datetime.strftime('%H:%M - %d.%m.%Y') }}</small>
+    {% if current_user.is_authenticated %}
+    <hr>
+    <a href="{{ url_for('posts.post', id=post.id) }}"><i class="material-icons text-dark">chat</i></a><br>
+    {% endif %}
+    {% if post.author == current_user %}
+    <hr>
+    <form action="{{ url_for('posts.update_post', id=post.id) }}" method="GET">
+      <input class="btn btn-success mb-1" type="submit" value="Update">
+    </form>
+    <form action="{{ url_for('posts.delete_post', id=post.id) }}" method="POST">
+      <input class="btn btn-danger" type="submit" value="Delete">
+    </form>
+    {% endif %}
+  </div>
+</div>
+{% endfor %}
 {% else %}
-  <div class="text-center w-100">
-    <h1>No posts found...</h1>
-  </div>
+<div class="text-center w-100">
+  <h1>No posts found...</h1>
+</div>
 {% endif %}
