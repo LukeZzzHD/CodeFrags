@@ -10,26 +10,32 @@
     </div>
   </div>
   <div class="card-body p-0">
-      <pre class="language-{{ post.language.name }} m-0">
-        <code>{{ post.code }}</code>
-      </pre>
+    <pre class="language-{{ post.language.name }} m-0">
+      <code>{{ post.code }}</code>
+    </pre>
   </div>
   <div class="card-footer">
     {% if current_user.is_authenticated %}
-    <a href="{{ url_for(getLikeUrl(post), id=post.id) }}"><i class="material-icons like_button">{{ getLikeIcon(post) }}</i></a><small style="font-size: 30px;"> {{ post.user_likes|length }}</small><br>
+      <a href="{{ url_for(getLikeUrl(post), id=post.id) }}">
+        <i class="material-icons like_button">{{ getLikeIcon(post) }}</i>
+      </a>
+      <small style="font-size: 30px;"> {{ post.user_likes|length }}</small>
+      <br>
     {% endif %}
     <small><b>Description:</b></small>
     <p>{{ post.description }}</p>
     <hr>
     <small><b>Posted:</b> {{ post.datetime.strftime('%H:%M - %d.%m.%Y') }}</small>
-    {% if post.comments %}<hr>{% endif %}
+    {% if post.comments %}
+      <hr>
+    {% endif %}
     {% for comment in post.comments %}
       <small><b><a href="{{ url_for('users.user', username=comment.user.username) }}">{{ comment.user.username }}</a></b> - {{ comment.content }}<span class="text-muted"> • {{ comment.datetime.strftime('%H:%M - %d.%m.%Y') }}</span></small>
       {% if current_user.is_authenticated %}
         <a href="{{ url_for(getCommentLikeUrl(comment), id=comment.id) }}" class="material-icons" style="text-decoration:none;font-size:20px;color:#dc3545;transform:translateY(5px);">{{ getCommentLikeIcon(comment) }}</a><small style="font-size: 20px;"> {{ comment.user_likes|length }}</small>
       {% endif %}
       {% if comment.user == current_user or post.author == current_user %}
-       <span class="text-muted"> • </span><a href="{{ url_for('posts.delete_comment', id=comment.id) }}" class="material-icons color-dark" style="text-decoration:none;font-size:20px;color:#dc3545;transform:translateY(5px);">delete_forever</a>
+        <span class="text-muted"> • </span><a href="{{ url_for('posts.delete_comment', id=comment.id) }}" class="material-icons color-dark" style="text-decoration:none;font-size:20px;color:#dc3545;transform:translateY(5px);">delete_forever</a>
       {% endif %}
       <br>
     {% endfor %}
@@ -38,27 +44,27 @@
         <form class="w-100" action="" method="post">
           {{ form.hidden_tag() }}
           {% if form.comment.errors %}
-              {{ form.comment(class="form-control form-control-lg is-invalid comment_field w-100 p-1") }}
-              <div class="invalid-feedback">
-                  {% for error in form.comment.errors %}
-                      <span>{{ error }}</span>
-                  {% endfor %}
-              </div>
+            {{ form.comment(class="form-control form-control-lg is-invalid comment_field w-100 p-1") }}
+            <div class="invalid-feedback">
+              {% for error in form.comment.errors %}
+                <span>{{ error }}</span>
+              {% endfor %}
+            </div>
           {% else %}
-              {{ form.comment(class="form-control form-control-lg comment_field w-100 p-1 mt-2") }}
+            {{ form.comment(class="form-control form-control-lg comment_field w-100 p-1 mt-2") }}
           {% endif %}
           {{ form.submit(class="btn btn-primary mt-1") }}
         </form>
       </div>
     {% endif %}
     {% if post.author == current_user %}
-    <hr>
-    <form action="{{ url_for('posts.update_post', id=post.id) }}" method="GET">
-      <input class="btn btn-success mb-1" type="submit" value="Update">
-    </form>
-    <form action="{{ url_for('posts.delete_post', id=post.id) }}" method="POST">
-      <input class="btn btn-danger" type="submit" value="Delete">
-    </form>
+      <hr>
+      <form action="{{ url_for('posts.update_post', id=post.id) }}" method="GET">
+        <input class="btn btn-success mb-1" type="submit" value="Update">
+      </form>
+      <form action="{{ url_for('posts.delete_post', id=post.id) }}" method="POST">
+        <input class="btn btn-danger" type="submit" value="Delete">
+      </form>
     {% endif %}
   </div>
 </div>

@@ -35,7 +35,6 @@ def getCommentLikeUrl(comment):
 def home():
     posts = Post.query.filter_by()\
         .order_by(Post.datetime.desc())
-
     usercount = User.query.count()
     postcount = Post.query.count()
 

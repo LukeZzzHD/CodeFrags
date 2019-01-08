@@ -49,7 +49,6 @@ class Post(db.Model):
     comments = db.relationship('Comment', backref='comments')
     language = db.relationship('Language', backref='language')
 
-
 class Language(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30), nullable=False)
@@ -62,8 +61,6 @@ class Comment(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     user_likes = db.relationship('CommentLike', backref='likes', lazy=True)
     user = db.relationship('User', backref='author')
-
-
 
 class CommentLike(db.Model):
     id = db.Column(db.Integer, primary_key=True)

@@ -4,11 +4,10 @@ from website import db, bcrypt
 from website.main.routes import getLikeUrl, getLikeIcon
 from website.models import User, Post, Language, Comment, CommentLike
 from website.users.forms import (RegistrationForm, LoginForm, UpdateAccountForm,
-                                   RequestResetForm, ResetPasswordForm, NewPostForm)
+                                 RequestResetForm, ResetPasswordForm, NewPostForm)
 from website.users.utils import save_picture
 
 users = Blueprint('users', __name__)
-
 
 @users.route("/register", methods=['GET', 'POST'])
 def register():
@@ -23,7 +22,6 @@ def register():
         flash('Your account has been created! You are now able to log in', 'success')
         return redirect(url_for('users.login'))
     return render_template('register.html', title='Register', form=form)
-
 
 @users.route("/login", methods=['GET', 'POST'])
 def login():
@@ -40,13 +38,11 @@ def login():
             flash('Login Unsuccessful. Please check email and password', 'danger')
     return render_template('login.html', title='Login', form=form)
 
-
 @users.route("/logout")
 def logout():
     logout_user()
     flash('You have been logged out.', 'secondary')
     return redirect(url_for('main.home'))
-
 
 @users.route("/account", methods=['GET', 'POST'])
 @login_required
@@ -68,7 +64,6 @@ def account():
     return render_template('account.html', title='Account',
                            image_file=image_file, form=form)
 
-
 @users.route("/user/<string:username>")
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
@@ -76,7 +71,6 @@ def user(username):
         .order_by(Post.datetime.desc())
     resultlength = posts.count()
     return render_template('user_posts.html', posts=posts, user=user, resultlength=resultlength, getLikeIcon=getLikeIcon, getLikeUrl=getLikeUrl)
-
 
 @users.route('/new', methods=['GET', 'POST'])
 @login_required
