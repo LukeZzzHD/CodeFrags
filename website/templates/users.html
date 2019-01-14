@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="col-12">
+  <h2>All registered users:</h2>
+  {% for user in users %}
+    <div class="card w-100 mb-3 p-3">
+      <div class="media">
+        <img style="height:75px;width:75px;object-fit:cover;" class="rounded-circle account-img mr-4" src="{{ url_for('static', filename='profile_pics/' + user.image_file) }}">
+        <div class="media-body h-100">
+          <h2 class="account-heading"><a href="{{ url_for('users.user', username=user.username) }}">{{ user.username }}</a></h2>
+          <p class="text-secondary">
+            <a href="mailto:user.email">{{ user.email }}</a>
+          </p>
+        </div>
+        {% if current_user.id == 1 %}
+          <a href="{{ url_for('users.delete_user', id=user.id) }}" class="btn btn-danger">Delete</a>
+        {% endif %}
+      </div>
+    </div>
+  {% endfor %}
+</div>
+{% endblock content %}

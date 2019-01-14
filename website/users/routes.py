@@ -84,3 +84,25 @@ def new():
         flash('You post has been created successfully!', 'success')
         return redirect(url_for('main.home'))
     return render_template('create_post.html', title='New', form=form)
+
+@users.route("/user/<int:id>/delete")
+@login_required
+def delete_user(id):
+    if current_user.email != 'admin@cfrags.com' and current_user.id != id:
+        flash('You don\'t have permission to do this!', 'danger')
+        return redirect(url_for('main.home'))
+    user = User.query.filter_by(id=id).first_or_404()
+    db.session.delete(user)
+
+    flash('The user ' + user.username + ' has been deleted successfully!', 'success')
+    return redirect(url_for('main.home'))
+
+@users.route("/allusers")
+def all_users():
+    users = User.query.all()
+    if users:
+        return render_template("users.html", users=users)
+
+    else:
+        flash('There are no users registered!', 'warning')
+        return redirect(url_for('main.home'))
