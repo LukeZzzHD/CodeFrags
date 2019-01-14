@@ -10,7 +10,7 @@
       </p>
     </div>
 	{% if current_user.id == 1 and user.id != current_user.id %}
-		<a href="{{ url_for('users.delete_user', id=user.id) }}" class="btn btn-danger">Delete account</a>
+		<a href="{{ url_for('users.delete_user', id=user.id) }}" class="btn btn-danger">Delete user</a>
     {% endif %}
   </div>
 </div>

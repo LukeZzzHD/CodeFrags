@@ -2,7 +2,7 @@ from flask import render_template, url_for, flash, redirect, request, Blueprint
 from flask_login import login_user, current_user, logout_user, login_required
 from website import db, bcrypt
 from website.main.routes import getLikeUrl, getLikeIcon
-from website.models import User, Post, Language, Comment, CommentLike
+from website.models import User, Post, Language, Comment, CommentLike, PostLike
 from website.users.forms import (RegistrationForm, LoginForm, UpdateAccountForm,
                                  RequestResetForm, ResetPasswordForm, NewPostForm)
 from website.users.utils import save_picture
@@ -92,7 +92,20 @@ def delete_user(id):
         flash('You don\'t have permission to do this!', 'danger')
         return redirect(url_for('main.home'))
     user = User.query.filter_by(id=id).first_or_404()
+    posts = Post.query.filter_by(user_id=user.id).all()
+    comments = Comment.query.filter_by(user_id=user.id).all()
+    comment_likes = CommentLike.query.filter_by(user_id=user.id).all()
+    post_likes = PostLike.query.filter_by(user_id=user.id).all()
+    for post in posts:
+        db.session.delete(post)
+    for comment in comments:
+        db.session.delete(comment)
+    for comment_like in comment_likes:
+        db.session.delete(comment_like)
+    for post_like in post_likes:
+        db.session.delete(post_like)
     db.session.delete(user)
+    db.session.commit()
 
     flash('The user ' + user.username + ' has been deleted successfully!', 'success')
     return redirect(url_for('main.home'))
