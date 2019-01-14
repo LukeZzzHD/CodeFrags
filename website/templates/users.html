@@ -3,7 +3,7 @@
 <div class="col-12">
   <h2>All registered users:</h2>
   {% for user in users %}
-    <div class="card w-100 mb-3 p-3">
+	<div class="card w-100 mb-3 p-3">
       <div class="media">
         <img style="height:75px;width:75px;object-fit:cover;" class="rounded-circle account-img mr-4" src="{{ url_for('static', filename='profile_pics/' + user.image_file) }}">
         <div class="media-body h-100">
@@ -12,9 +12,14 @@
             <a href="mailto:user.email">{{ user.email }}</a>
           </p>
         </div>
-        {% if current_user.id == 1 %}
-          <a href="{{ url_for('users.delete_user', id=user.id) }}" class="btn btn-danger">Delete</a>
+        {% if user.id != 1 and current_user.id != user.id %}
+          <a href="{{ url_for('users.delete_user', id=user.id) }}" class="btn btn-danger">Delete user</a>
         {% endif %}
+		{% if user.id == 1%}
+			<div class="btn btn-success">admin</div>
+		{% else %}
+			<div class="btn btn-secondary ml-3">user</div>
+		{% endif %}
       </div>
     </div>
   {% endfor %}
