@@ -9,7 +9,6 @@ from flask_login import UserMixin
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
@@ -19,23 +18,12 @@ class User(db.Model, UserMixin):
     posts = db.relationship('Post', backref='author', lazy=True)
     liked_comments = db.relationship('CommentLike', backref='user', lazy=True)
     liked_posts = db.relationship('PostLike', backref='user', lazy=True)
+    role_id = db.Column(db.Integer, db.ForeignKey('role.id'), default=1)
+    role = db.relationship('Role', backref='role', lazy=True)
 
-    def get_reset_token(self, expires_sec=1800):
-        s = Serializer(current_app.config['SECRET_KEY'], expires_sec)
-        return s.dumps({'user_id': self.id}).decode('utf-8')
-
-    @staticmethod
-    def verify_reset_token(token):
-        s = Serializer(current_app.config['SECRET_KEY'])
-        try:
-            user_id = s.loads(token)['user_id']
-        except:
-            return None
-        return User.query.get(user_id)
-
-    def __repr__(self):
-        return f"User('{self.username}', '{self.email}', '{self.image_file}')"
-
+class Role(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    rights = db.Column(db.Integer, nullable=False, default=0)
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
