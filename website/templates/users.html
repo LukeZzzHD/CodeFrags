@@ -12,15 +12,13 @@
             <a href="mailto:user.email">{{ user.email }}</a>
           </p>
         </div>
-        {% if current_user.role.rights > user.role.rights and current_user.role.rights == 2 %}
+        {% if user.id != 1 and current_user.id != user.id and current_user.id == 1 %}
           <a href="{{ url_for('users.delete_user', id=user.id) }}" class="btn btn-danger">Delete user</a>
         {% endif %}
-		{% if user.role.rights == 0 %}
-			<div class="btn btn-success ml-3">user</div>
-		{% elif user.role.rights == 1 %}
-			<div class="btn btn-primary ml-3">mod</div>
-    {% else %}
-      <div class="btn btn-danger">admin</div>
+		{% if user.id == 1%}
+			<div class="btn btn-success">admin</div>
+		{% else %}
+			<div class="btn btn-secondary ml-3">user</div>
 		{% endif %}
       </div>
     </div>

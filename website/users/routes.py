@@ -113,8 +113,6 @@ def delete_user(id):
 @users.route("/allusers")
 def all_users():
     users = User.query.all()
-    for user in users:
-        print("User: " + str(user.id) + " - " + user.username + " - rights: " + str(user.role.rights))
     if users:
         return render_template("users.html", users=users)
 

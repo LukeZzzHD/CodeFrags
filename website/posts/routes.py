@@ -120,7 +120,7 @@ def update_post(id):
 @login_required
 def delete_post(id):
     post = Post.query.get_or_404(id)
-    if post.author != current_user and current_user.role.rights < 1 and current_user.role.rights <= post.author.role.rights:
+    if post.author != current_user:
         abort(403)
     db.session.delete(post)
     db.session.commit()
