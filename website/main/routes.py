@@ -11,11 +11,11 @@ def getLikeIcon(post):
             return 'favorite'
         return 'favorite_border'
 
-def getLikeUrl(post):
+def getLikeFun(post):
     liked = PostLike.query.filter_by(user_id=current_user.id, post_id=post.id).first()
     if liked:
-        return 'posts.unlike'
-    return 'posts.like'
+        return "'unlike'"
+    return "'like'"
 
 
 def getCommentLikeIcon(comment):
@@ -24,11 +24,11 @@ def getCommentLikeIcon(comment):
             return 'favorite'
         return 'favorite_border'
 
-def getCommentLikeUrl(comment):
+def getCommentLikeFun(comment):
     liked = CommentLike.query.filter_by(user_id=current_user.id, comment_id=comment.id).first()
     if liked:
-        return 'posts.unlike_comment'
-    return 'posts.like_comment'
+        return "'unlike'"
+    return "'like'"
 
 @main.route("/")
 @main.route("/home", methods=['GET', 'POST'])

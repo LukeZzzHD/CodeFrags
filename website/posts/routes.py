@@ -1,7 +1,7 @@
 from flask import (render_template, url_for, flash,
                    redirect, request, abort, Blueprint)
 from flask_login import current_user, login_required
-from website.main.routes import getLikeUrl, getLikeIcon, getCommentLikeUrl, getCommentLikeIcon
+from website.main.routes import getLikeFun, getLikeIcon, getCommentLikeFun, getCommentLikeIcon
 from website import db
 from website.models import Post, Language, Comment, PostLike, CommentLike
 from website.posts.forms import PostForm, CommentForm
@@ -42,7 +42,7 @@ def post(id):
     for error in form.errors:
         flash(error)
 
-    return render_template('post.html', title=post.title, post=post, form=form, getLikeUrl=getLikeUrl, getLikeIcon=getLikeIcon, getCommentLikeUrl=getCommentLikeUrl, getCommentLikeIcon=getCommentLikeIcon)
+    return render_template('post.html', title=post.title, post=post, form=form, getLikeFun=getLikeFun, getLikeIcon=getLikeIcon, getCommentLikeFun=getCommentLikeFun, getCommentLikeIcon=getCommentLikeIcon)
 
 @posts.route("/post/comment/<int:id>/delete")
 @login_required
@@ -136,7 +136,7 @@ def search():
         posts = Post.query.filter(Post.title.like("%" + q.replace(" ", "%%") + "%")).all()
         resultlength = len(posts)
 
-        return render_template('results.html', posts=posts, getLikeUrl=getLikeUrl, getLikeIcon=getLikeIcon, resultlength=resultlength)
+        return render_template('results.html', posts=posts, getLikeFun=getLikeFun, getLikeIcon=getLikeIcon, resultlength=resultlength)
 
     return redirect(url_for('main.home'))
 

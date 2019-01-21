@@ -16,29 +16,31 @@
   </div>
   <div class="card-footer">
     {% if current_user.is_authenticated %}
-      <a href="{{ url_for(getLikeUrl(post), id=post.id) }}">
-        <i class="material-icons like_button">{{ getLikeIcon(post) }}</i>
+	<div id="postLike">
+	<a onclick="likeorunlikePost({{ post.id }}, {{ getLikeFun(post) }})">
+        <i class="material-icons like_button" style="cursor:pointer;">{{ getLikeIcon(post) }}</i>
       </a>
       <small style="font-size: 30px;"> {{ post.user_likes|length }}</small>
+	</div>
       <br>
     {% endif %}
     <small><b>Description:</b></small>
     <p>{{ post.description }}</p>
     <hr>
     <small><b>Posted:</b> {{ post.datetime.strftime('%H:%M - %d.%m.%Y') }}</small>
-    {% if post.comments %}
-      <hr>
-    {% endif %}
-    {% for comment in post.comments %}
-      <small><b><a href="{{ url_for('users.user', username=comment.user.username) }}">{{ comment.user.username }}</a></b> - {{ comment.content }}<span class="text-muted"> • {{ comment.datetime.strftime('%H:%M - %d.%m.%Y') }}</span></small>
-      {% if current_user.is_authenticated %}
-        <a href="{{ url_for(getCommentLikeUrl(comment), id=comment.id) }}" class="material-icons" style="text-decoration:none;font-size:20px;color:#dc3545;transform:translateY(5px);">{{ getCommentLikeIcon(comment) }}</a><small style="font-size: 20px;"> {{ comment.user_likes|length }}</small>
-      {% endif %}
-      {% if comment.user == current_user or post.author == current_user %}
-        <span class="text-muted"> • </span><a href="{{ url_for('posts.delete_comment', id=comment.id) }}" class="material-icons color-dark" style="text-decoration:none;font-size:20px;color:#dc3545;transform:translateY(5px);">delete_forever</a>
-      {% endif %}
-      <br>
-    {% endfor %}
+    <hr>
+	<div id="comments">
+		{% for comment in post.comments %}
+		  <small><b><a href="{{ url_for('users.user', username=comment.user.username) }}">{{ comment.user.username }}</a></b> - {{ comment.content }}<span class="text-muted"> • {{ comment.datetime.strftime('%H:%M - %d.%m.%Y') }}</span></small>
+		  {% if current_user.is_authenticated %}
+			<a href="{{ url_for(getCommentLikeUrl(comment), id=comment.id) }}" class="material-icons" style="text-decoration:none;font-size:20px;color:#dc3545;transform:translateY(5px);">{{ getCommentLikeIcon(comment) }}</a><small style="font-size: 20px;"> {{ comment.user_likes|length }}</small>
+		  {% endif %}
+		  {% if comment.user == current_user or post.author == current_user %}
+			<span class="text-muted"> • </span><a onclick="deleteComment({{ comment.id }})" class="material-icons color-dark" style="text-decoration:none;font-size:20px;color:#dc3545;transform:translateY(5px);cursor:pointer;">delete_forever</a>
+		  {% endif %}
+		  <br>
+		{% endfor %}
+	</div>
     {% if current_user.is_authenticated %}
       <div class="form-inline">
         <form class="w-100" action="" method="post">
